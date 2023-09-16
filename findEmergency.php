@@ -4,6 +4,7 @@ $serviceKey = "";
 $STAGE1 = $_GET['STAGE1'];
 $STAGE2 = $_GET['STAGE2'];
 $pageNo = $_GET['pageNo'];
+$type = $_GET['type'];
 $numOfRows = 10;
 
 $ch = curl_init();
@@ -34,7 +35,8 @@ function xml_to_array($item) {
 
 for ($i = 0; $i < 10; $i++) {
     if (!isset($items->item[$i])) break;
-    $data["emergenvyRoom"] = xml_to_array($items->item[$i]->hvec); //응급실
+    if ($type === "e" && $data['emergenvyRoom'] <= 0) break;
+    $data['emergenvyRoom'] = xml_to_array($items->item[$i]->hvec); //응급실
     $data['operatingRoom'] = xml_to_array($items->item[$i]->hvoc); //수술실
     $data['mri'] = xml_to_array($items->item[$i]->hvmriayn); //mri
     $data['ct'] = xml_to_array($items->item[$i]->hvangioayn); //ct
